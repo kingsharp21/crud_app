@@ -1,0 +1,100 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  background-color: #f9f9f9;
+}
+p{
+  padding: 0;
+  margin: 0;
+}
+
+.wrapper{
+  width: 800px;
+  margin: 0 auto;
+}
+
+header .wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: aqua; */
+}
+header .wrapper h1{
+  padding: 2rem;
+  font-size: 3rem;
+  font-weight: 600;
+  font-family: sans-serif;
+  /* background-color: brown; */
+}
+
+/* add-section  */
+.add-section .wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 0;
+}
+.add-section .wrapper p{
+  font-size: 2rem;
+  font-weight: 600;
+}
+.add-section .wrapper button{
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: blue;
+  color: white;
+  font-family: sans-serif;
+  font-weight: 600;
+}
+
+
+/* contacts */
+.contacts.wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.contacts input{
+  width: 100%;
+  padding: 6px 20px;
+  border-radius: 5px;
+  border: 1px solid rgba(128, 128, 128, 0.621);
+  background-color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.contacts.wrapper input:focus{
+  outline: blue;
+}
+.contacts.wrapper .contact-list{
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  border: 1px solid rgba(128, 128, 128, 0.621);
+  background-color: white;
+
+}
+
+.contact-list .list{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.contact-list .list .number p{
+  font-size: 20px;
+  font-weight: 600;
+
+}
+
+
