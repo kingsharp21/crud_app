@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap');
 *{
   margin: 0;
   padding: 0;
@@ -10,6 +11,12 @@ body{
 p{
   padding: 0;
   margin: 0;
+}
+.hidden{
+  display: none !important;
+}
+.visible{
+  display: flex;
 }
 
 .wrapper{
@@ -27,7 +34,7 @@ header .wrapper h1{
   padding: 2rem;
   font-size: 3rem;
   font-weight: 600;
-  font-family: sans-serif;
+  font-family: 'Poppins', sans-serif;
   /* background-color: brown; */
 }
 
@@ -42,40 +49,44 @@ header .wrapper h1{
   font-size: 2rem;
   font-weight: 600;
 }
-.add-section .wrapper button{
+/* .add-section .wrapper button{
   padding: 5px 10px;
   border: none;
   border-radius: 5px;
   background-color: blue;
   color: white;
-  font-family: sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 600;
-}
+} */
 
 
-/* contacts */
-.contacts.wrapper{
+/* contents */
+.contents.wrapper{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.contacts input{
+.contents input{
+  background: url("./assests/img/search-icon.png") top 12px left 8px no-repeat;
+  background-size: 25px;
   width: 100%;
-  padding: 6px 20px;
+  /* padding: 8px 35px; */
   border-radius: 5px;
-  border: 1px solid rgba(128, 128, 128, 0.621);
+  /* border: 1px solid rgba(128, 128, 128, 0.621); */
   background-color: white;
-  font-size: 1rem;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
   font-weight: 600;
   margin-bottom: 1.5rem;
 }
 
-.contacts.wrapper input:focus{
+.contents.wrapper input:focus{
   outline: blue;
 }
-.contacts.wrapper .contact-list{
+.contents.wrapper .content-list{
   width: 100%;
   height: auto;
   border-radius: 5px;
@@ -84,17 +95,47 @@ header .wrapper h1{
 
 }
 
-.contact-list .list{
+.content-list .list{
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px;
+  cursor: pointer;
+}
+.content-list .list:hover{
+  
 }
 
-.contact-list .list .number p{
+.content-list .list:not(:last-child){
+  border-bottom: 1px solid gray;
+}
+
+.content-list .list .number p{
   font-size: 20px;
   font-weight: 600;
+  text-transform: capitalize;
+}
+.content-list .list .number span{
+  font-size: 16px;
+  color: grey;
+}
 
+
+
+
+
+/* add-form  */
+
+.add-form{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color:rgba(0, 0, 0, 0.744);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 
