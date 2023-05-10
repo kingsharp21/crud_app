@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import EditIcon from '@mui/icons-material/Edit';
+import { baseURL } from "../config/baseURL";
 
 const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData, getData }) => {
   const [edit, setEdit] = useState(false);
@@ -32,7 +33,6 @@ const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData, getData })
         console.log(form.firstName);
         console.log(form.lastName);
         console.log(form.phoneNumber);
-        const baseURL = "http://127.0.0.1:8000/api";
         axios
             .patch(`${baseURL}/edit_contact`,{ 
                 id: id,
@@ -41,10 +41,10 @@ const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData, getData })
                 phoneNumber: `${form.phoneNumber}`
                 })
             .then((response) => {
-                if (response.data.status == "updated") {
-                    getData()
+                if (response.data.status == "updated") {       
                     setEdit(false)
                     toast.success("Contact edited successfully!!");
+                    getData()
                 }             
             }).catch((err)=>{
                 toast.error('Faild to save contact! Tips:number lenght should be below 12 digits')
@@ -115,11 +115,16 @@ const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData, getData })
             />
             <DeleteForeverIcon
               onClick={() => deleteData(id)}
+              className="delect-icon"
               style={{
-                fill: "red",
-                fontSize: 25,
+                fill: "white",
+                background: "red",
+                borderRadius: 3,
+                padding:2,
+                fontSize: 30,
                 cursor: "pointer",
                 margin: "0 10",
+
               }}
               titleAccess="Delete"
             />

@@ -100,10 +100,6 @@ header .wrapper h1{
   padding: 10px;
   cursor: pointer;
 }
-.content-list .list:hover{
-  
-}
-
 .content-list .list:not(:last-child){
   border-bottom: 1px solid gray;
 }
@@ -117,6 +113,7 @@ header .wrapper h1{
   font-size: 16px;
   color: grey;
 }
+
 
 
 

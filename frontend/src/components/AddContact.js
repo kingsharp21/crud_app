@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import axios from "axios";
 import CloseIcon from '@mui/icons-material/Close';
 import { toast } from "react-toastify";
+import { baseURL } from "../config/baseURL";
 
 
 function AddContact({ visibility, updateVisibility, getData }) {
@@ -21,7 +22,6 @@ function AddContact({ visibility, updateVisibility, getData }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const baseURL = 'http://127.0.0.1:8000/api'
 
         if (form.firstName == '' || form.lastName == '' || form.phoneNumber == '') {
             toast.warning('All fields are required !!')

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AddIcon from "@mui/icons-material/Add";
-// import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-// import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
-// import EditIcon from '@mui/icons-material/Edit';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { filterServices } from "./services/services";
+import { baseURL } from "./config/baseURL";
 
 import AddContact from "./components/AddContact";
 import Contacts from "./components/Contacts";
@@ -25,7 +24,7 @@ function App() {
 
   // fetch all data
   function getData() {
-    const baseURL = "http://127.0.0.1:8000/api";
+   
     axios.get(`${baseURL}/get_all_contacts`).then((response) => {
       setAllData(response.data["data"]);
       setLoading(false);
@@ -34,7 +33,7 @@ function App() {
 
   // delete data
   function deleteData(contact_id) {
-    const baseURL = "http://127.0.0.1:8000/api";
+   
     axios
       .delete(`${baseURL}/delete_contact`, {
         data: { id: contact_id },
@@ -54,7 +53,12 @@ function App() {
       <ToastContainer />
       <header>
         <div className="wrapper">
-          <h1>Phone Book App</h1>
+          <h1><AutoStoriesIcon style={{
+            fill: "black",
+            fontSize: 55,
+            cursor: "pointer",
+            margin: "0 10",
+          }} /> Phone Book App</h1>
         </div>
       </header>
       <section className="add-section">
