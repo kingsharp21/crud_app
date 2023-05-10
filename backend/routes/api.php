@@ -25,6 +25,6 @@ Route::get('/get_all_contacts', [ContactsController::class, 'index']);
 // edit individual contacts route 
 Route::patch('/edit_contact', [ContactsController::class, 'update']);
 // add a contacts route 
-Route::post('/add', [ContactsController::class, 'store']);
+Route::post('/store_contact', [ContactsController::class, 'store']);
  // delect a contacts route 
-Route::delete('/delete?{id}', [ContactsController::class, 'destroy']);
+Route::delete('/delete_contact', [ContactsController::class, 'destroy']);

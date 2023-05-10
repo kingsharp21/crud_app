@@ -68,13 +68,11 @@ header .wrapper h1{
   align-items: center;
 }
 
-.contents input{
+.contents input.searchInput{
   background: url("./assests/img/search-icon.png") top 12px left 8px no-repeat;
   background-size: 25px;
   width: 100%;
-  /* padding: 8px 35px; */
   border-radius: 5px;
-  /* border: 1px solid rgba(128, 128, 128, 0.621); */
   background-color: white;
   font-size: 16px;
   padding: 12px 20px 12px 40px;
@@ -122,20 +120,74 @@ header .wrapper h1{
 
 
 
+/* Edit contacts  */
+form.list .edit{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+form.list .edit .fileds{
+  display: flex;
+}
+form.list .edit .fileds input{
+  margin-right: 10px;
+}
+
+
+
 
 
 /* add-form  */
 
 .add-form{
-  position: absolute;
+  position: fixed;
   top: 0;
+  left: 0;
   bottom: 0;
-  height: 100vh;
-  width: 100vw;
+  right: 0;
+  height: 100%;
+  width: 100%;
   background-color:rgba(0, 0, 0, 0.744);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+
+
+/* loading  */
+.center-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 200px;
+  /****** center box
+    width: 300px;
+    height: 300px;
+    border: solid 1px #aaa;
+    ******/
+}
+.loader-circle-6 {
+  animation: loader-circle-6-spin 1s linear infinite;
+  border: solid 5px #bbb;
+  border-top: solid 5px transparent;
+  border-radius: 100%;
+  width: 70px;
+  height: 70px;
+  display: inline-block;
+}
+
+@keyframes loader-circle-6-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
 

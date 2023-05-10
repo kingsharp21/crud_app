@@ -43,11 +43,6 @@ class ContactsController extends Controller
         return response($response, 200);
     }
 
-    public function show(Contacts $contacts)
-    {
-        //
-    }
-
   
     public function update(Request $request)
     {
@@ -58,13 +53,31 @@ class ContactsController extends Controller
             'phoneNumber' => 'required|string|max:12',
         ]);
 
-        contacts::where("id", $request->id)->update($request->toArray());
+        if ($validator->fails())
+        {
+            return response(["status" =>"error",'message'=>$validator->errors()->all()], 422);
+        }
+
+        $data = Contacts::where("id", $request->id)->update($request->toArray());
+        $response = ["status" =>"updated","data"=>$data];
+        return response($response, 200);
     }
 
    
     public function destroy(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|int|max:100',
+        ]);
+
+        if ($validator->fails())
+        {
+            return response(["status" =>"error",'message'=>$validator->errors()->all()], 422);
+        }
+        
+        $data = Contacts::where('id',$request->id)->delete();
+        $response = ["status" =>"deleted","data"=>$data];
+        return response($response, 200);
         
     }
 }

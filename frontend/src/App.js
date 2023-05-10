@@ -1,55 +1,53 @@
-import { useState } from "react";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
-import AddIcon from '@mui/icons-material/Add';
-import CloseIcon from '@mui/icons-material/Close';
-import EditIcon from '@mui/icons-material/Edit';
-
-import Contacts from "./components/contacts/Contacts";
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import AddIcon from "@mui/icons-material/Add";
+// import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+// import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+// import EditIcon from '@mui/icons-material/Edit';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { filterServices } from "./services/services";
+
+import AddContact from "./components/AddContact";
+import Contacts from "./components/Contacts";
+
 import "./App.css";
 function App() {
-  const notify = () => toast("Wow so easy!");
+  const [show, setShow] = useState("hidden");
+  const [isLoading, setLoading] = useState(true);
+  const [allData, setAllData] = useState(null);
 
-  const [show, setShow] = useState('hidden')
-
-  function filterContant() {
-    let input, filter, contentList, list, name, i, txtValue;
-    input = document.querySelector(".searchInput");
-    filter = input.value.toUpperCase();
-    contentList = document.querySelector(".content-list");
-    list = contentList.getElementsByClassName("list");
-    for (i = 0; i < list.length; i++) {
-      name = list[i].getElementsByTagName("div")[0];
-      txtValue = name.textContent || name.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        list[i].style.display = "";
-      } else {
-        list[i].style.display = "none";
-      }
-    }
-  }
-
-
+  // show addContact dialog
   function displayAddDialog() {
-    setShow('visible')
+    setShow("visible");
   }
 
-  function closeAddDialog() {
-    setShow('hidden')
+  // fetch all data
+  function getData() {
+    const baseURL = "http://127.0.0.1:8000/api";
+    axios.get(`${baseURL}/get_all_contacts`).then((response) => {
+      setAllData(response.data["data"]);
+      setLoading(false);
+    });
   }
 
-  function saveNewNumber() {
-    
+  // delete data
+  function deleteData(contact_id) {
+    const baseURL = "http://127.0.0.1:8000/api";
+    axios
+      .delete(`${baseURL}/delete_contact`, {
+        data: { id: contact_id },
+      })
+      .then((response) => {
+        getData();
+        toast.error("Contact deleted");
+      });
   }
 
-  function editNumber() {
-    
-  }
-
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div className="App">
@@ -62,167 +60,69 @@ function App() {
       <section className="add-section">
         <div className="wrapper">
           <p>Contacts</p>
-          <button onClick={displayAddDialog} className="btn btn-primary"><AddIcon/> Add Contact</button>
+          <button onClick={displayAddDialog} className="btn btn-primary">
+            <AddIcon /> Add Contact
+          </button>
         </div>
       </section>
 
       <div className="contents wrapper">
         <input
           className="searchInput form-control"
-          onChange={filterContant}
+          onChange={filterServices}
           type="text"
           placeholder="Search for content by last name..."
         />
         <div className="content-list">
-         
-          <Contacts firstname='Offei' lastname='Boafo' number='0559336468'/>
-
-          <div className="list">
-            <div className="number">
-              <p>Offei Boafo</p>
-              <span>
-                {" "}
-                <LocalPhoneIcon style={{ fill: "grey", fontSize: 18 }} />{" "}
-                0559336468
-              </span>
+          {isLoading ? (
+            <div className="App">
+              <div class="center-body">
+                <div class="loader-circle-6"></div>
+              </div>
             </div>
-            <DeleteForeverIcon
-              style={{ fill: "red", fontSize: 28, cursor: "pointer" }}
-            titleAccess="delete"/>
-          </div>
+          ) : (
+            allData.map((data) => {
+              return (
+                <Contacts
+                  key={data.id}
+                  id={data.id}
+                  firstName={data.firstName}
+                  lastName={data.lastName}
+                  phoneNumber={data.phoneNumber}
+                  deleteData = {deleteData}
+                  getData={getData}
+                />
+                // <div key={data.id} className="list">
+                //   <div className="number">
+                //     <p>{`${data.firstName} ${data.lastName}`}</p>
+                //     <span>
+                //       {" "}
+                //       <LocalPhoneIcon style={{ fill: "grey", fontSize: 18 }} />{" "}
+                //       {data.phoneNumber}
+                //     </span>
+                //   </div>
+                //   <div className="tools">
+                //     <EditIcon
+                //       style={{ fill: "black", fontSize: 25, cursor: "pointer", margin: '0 10' }}
+                //       titleAccess="Edit"/>
+                //     <DeleteForeverIcon
+                //       onClick={() => deleteData(data.id)}
+                //       style={{ fill: "red", fontSize: 25, cursor: "pointer", margin:'0 10'  }}
+                //       titleAccess="Delete" />
+                //   </div>
 
-          <div className="list">
-            <div className="number">
-              <p>Zeddicus</p>
-              <span>
-                {" "}
-                <LocalPhoneIcon style={{ fill: "grey", fontSize: 18 }} />{" "}
-                0559336468
-              </span>
-            </div>
-            <DeleteForeverIcon
-              style={{ fill: "red", fontSize: 28, cursor: "pointer" }}
-            titleAccess="delete"/>
-          </div>
-
-          <div className="list">
-            <div className="number">
-              <p>Bill Gates</p>
-              <span>
-                {" "}
-                <LocalPhoneIcon style={{ fill: "grey", fontSize: 18 }} />{" "}
-                0559336468
-              </span>
-            </div>
-            <DeleteForeverIcon
-              style={{ fill: "red", fontSize: 28, cursor: "pointer" }}
-            titleAccess="delete"/>
-          </div>
-
-          <div className="list">
-            <div className="number">
-              <p>Victory Asamoah</p>
-              <span>
-                {" "}
-                <LocalPhoneIcon style={{ fill: "grey", fontSize: 18 }} />{" "}
-                0245705707
-              </span>
-            </div>
-            <DeleteForeverIcon
-              style={{ fill: "red", fontSize: 28, cursor: "pointer" }}
-            titleAccess="delete"/>
-          </div>
-
-          <div className="list">
-            <div className="number">
-              <p>Kingsharp nkansah</p>
-              <span>
-                {" "}
-                <LocalPhoneIcon style={{ fill: "grey", fontSize: 18 }} />{" "}
-                0559336468
-              </span>
-            </div>
-            <DeleteForeverIcon
-              style={{ fill: "red", fontSize: 28, cursor: "pointer" }}
-            titleAccess="delete"/>
-          </div>
+                // </div>
+              );
+            })
+          )}
         </div>
       </div>
 
-      <section className={`add-form ${show}`}>
-        <div className="col-5">
-          <div className="card mb-4">
-            <div className="card-header d-flex align-items-center justify-content-between">
-              <h5 className="mb-0">Add Contact</h5>
-              <CloseIcon style={{ fontSize: 28, cursor: "pointer" }} onClick={closeAddDialog} titleAccess="close"/>
-
-            </div>
-            <div className="card-body">
-              <form>
-                <div className="row mb-3">
-                  <label
-                    className="col-sm-2 col-form-label"
-                    for="basic-default-name"
-                  >
-                    First Name
-                  </label>
-                  <div className="col-sm-10">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="basic-default-name"
-                      placeholder="John Doe"
-                    />
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <label
-                    className="col-sm-2 col-form-label"
-                    for="basic-default-company"
-                  >
-                    Last Name
-                  </label>
-                  <div className="col-sm-10">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="basic-default-company"
-                      placeholder="ACME Inc."
-                    />
-                  </div>
-                </div>
-              
-                <div className="row mb-3">
-                  <label
-                    className="col-sm-2 col-form-label"
-                    for="basic-default-phone"
-                  >
-                    Phone No
-                  </label>
-                  <div className="col-sm-10">
-                    <input
-                      type="text"
-                      id="basic-default-phone"
-                      className="form-control phone-mask"
-                      placeholder="658 799 8941"
-                      aria-label="658 799 8941"
-                      aria-describedby="basic-default-phone"
-                    />
-                  </div>
-                </div>
-               
-                <div className="row justify-content-end">
-                  <div className="col-sm-10">
-                    <button type="submit" className="btn btn-primary">
-                      Save
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
+      <AddContact
+        visibility={show}
+        updateVisibility={setShow}
+        getData={getData}
+      />
     </div>
   );
 }
