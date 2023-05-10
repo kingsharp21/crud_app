@@ -118,9 +118,9 @@ const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData, getData })
               className="delect-icon"
               style={{
                 fill: "white",
-                background: "red",
+                background: "#D2042D",
                 borderRadius: 3,
-                padding:2,
+                padding:4,
                 fontSize: 30,
                 cursor: "pointer",
                 margin: "0 10",
