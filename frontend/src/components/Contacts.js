@@ -43,7 +43,7 @@ const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData, getData })
             .then((response) => {
                 if (response.data.status == "updated") {       
                     setEdit(false)
-                    toast.success("Contact edited successfully!!");
+                    toast.success("Contact updated successfully!!");
                     getData()
                 }             
             }).catch((err)=>{
