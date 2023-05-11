@@ -67,7 +67,7 @@ class ContactsController extends Controller
     public function destroy(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id' => 'required|int|max:100',
+            'id' => 'required|integer',
         ]);
 
         if ($validator->fails())

@@ -5,6 +5,7 @@
   box-sizing: border-box;
 }
 
+/* utilities  */
 body{
   background-color: #f9f9f9;
 }
@@ -24,18 +25,17 @@ p{
   margin: 0 auto;
 }
 
+/* header  */
 header .wrapper{
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: aqua; */
 }
 header .wrapper h1{
   padding: 2rem;
   font-size: 3rem;
   font-weight: 600;
   font-family: 'Poppins', sans-serif;
-  /* background-color: brown; */
 }
 
 /* add-section  */
@@ -49,16 +49,6 @@ header .wrapper h1{
   font-size: 2rem;
   font-weight: 600;
 }
-/* .add-section .wrapper button{
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: blue;
-  color: white;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-} */
-
 
 /* contents */
 .contents.wrapper{
@@ -67,7 +57,6 @@ header .wrapper h1{
   justify-content: center;
   align-items: center;
 }
-
 .contents input.searchInput{
   background: url("./assests/img/search-icon.png") top 12px left 8px no-repeat;
   background-size: 25px;
@@ -80,7 +69,6 @@ header .wrapper h1{
   font-weight: 600;
   margin-bottom: 1.5rem;
 }
-
 .contents.wrapper input:focus{
   outline: blue;
 }
@@ -90,9 +78,7 @@ header .wrapper h1{
   border-radius: 5px;
   border: 1px solid rgba(128, 128, 128, 0.621);
   background-color: white;
-
 }
-
 .content-list .list{
   display: flex;
   align-items: center;
@@ -103,7 +89,6 @@ header .wrapper h1{
 .content-list .list:not(:last-child){
   border-bottom: 1px solid gray;
 }
-
 .content-list .list .number p{
   font-size: 20px;
   font-weight: 600;
@@ -114,9 +99,6 @@ header .wrapper h1{
   color: grey;
 }
 
-
-
-
 /* Edit contacts  */
 form.list .edit{
   width: 100%;
@@ -125,7 +107,6 @@ form.list .edit{
   align-items: center;
 
 }
-
 form.list .edit .fileds{
   display: flex;
 }
@@ -133,12 +114,7 @@ form.list .edit .fileds input{
   margin-right: 10px;
 }
 
-
-
-
-
 /* add-form  */
-
 .add-form{
   position: fixed;
   top: 0;
@@ -153,8 +129,6 @@ form.list .edit .fileds input{
   justify-content: center;
 }
 
-
-
 /* loading  */
 .center-body {
   display: flex;
@@ -162,11 +136,6 @@ form.list .edit .fileds input{
   align-items: center;
   width: 100%;
   height: 200px;
-  /****** center box
-    width: 300px;
-    height: 300px;
-    border: solid 1px #aaa;
-    ******/
 }
 .loader-circle-6 {
   animation: loader-circle-6-spin 1s linear infinite;

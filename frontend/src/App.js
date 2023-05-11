@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AddIcon from "@mui/icons-material/Add";
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { filterServices } from "./services/services";
 import { baseURL } from "./config/baseURL";
+import { notifyError } from "./config/notificationMsg";
 
 import AddContact from "./components/AddContact";
 import Contacts from "./components/Contacts";
@@ -24,7 +25,6 @@ function App() {
 
   // fetch all data
   function getData() {
-   
     axios.get(`${baseURL}/get_all_contacts`).then((response) => {
       setAllData(response.data["data"]);
       setLoading(false);
@@ -33,14 +33,13 @@ function App() {
 
   // delete data
   function deleteData(contact_id) {
-   
     axios
       .delete(`${baseURL}/delete_contact`, {
         data: { id: contact_id },
       })
       .then((response) => {
         getData();
-        toast.error("Contact deleted");
+        notifyError("Contact deleted");
       });
   }
 
@@ -80,8 +79,8 @@ function App() {
         <div className="content-list">
           {isLoading ? (
             <div className="App">
-              <div class="center-body">
-                <div class="loader-circle-6"></div>
+              <div className="center-body">
+                <div className="loader-circle-6"></div>
               </div>
             </div>
           ) : (
@@ -94,28 +93,8 @@ function App() {
                   lastName={data.lastName}
                   phoneNumber={data.phoneNumber}
                   deleteData = {deleteData}
-                  getData={getData}
+                  refresh={getData}
                 />
-                // <div key={data.id} className="list">
-                //   <div className="number">
-                //     <p>{`${data.firstName} ${data.lastName}`}</p>
-                //     <span>
-                //       {" "}
-                //       <LocalPhoneIcon style={{ fill: "grey", fontSize: 18 }} />{" "}
-                //       {data.phoneNumber}
-                //     </span>
-                //   </div>
-                //   <div className="tools">
-                //     <EditIcon
-                //       style={{ fill: "black", fontSize: 25, cursor: "pointer", margin: '0 10' }}
-                //       titleAccess="Edit"/>
-                //     <DeleteForeverIcon
-                //       onClick={() => deleteData(data.id)}
-                //       style={{ fill: "red", fontSize: 25, cursor: "pointer", margin:'0 10'  }}
-                //       titleAccess="Delete" />
-                //   </div>
-
-                // </div>
               );
             })
           )}
@@ -125,7 +104,7 @@ function App() {
       <AddContact
         visibility={show}
         updateVisibility={setShow}
-        getData={getData}
+        refresh={getData}
       />
     </div>
   );

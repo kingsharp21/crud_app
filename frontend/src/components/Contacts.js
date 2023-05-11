@@ -1,12 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import EditIcon from '@mui/icons-material/Edit';
-import { baseURL } from "../config/baseURL";
 
-const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData, getData }) => {
+import { baseURL } from "../config/baseURL";
+import { notifyError, notifySuccess } from "../config/notificationMsg"
+
+const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData, refresh }) => {
   const [edit, setEdit] = useState(false);
 
   const needEdit = () => {setEdit(true);};
@@ -29,10 +31,6 @@ const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData, getData })
 
     const handleEdit = (event) => {
         event.preventDefault();
-        console.log(id);
-        console.log(form.firstName);
-        console.log(form.lastName);
-        console.log(form.phoneNumber);
         axios
             .patch(`${baseURL}/edit_contact`,{ 
                 id: id,
@@ -41,13 +39,13 @@ const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData, getData })
                 phoneNumber: `${form.phoneNumber}`
                 })
             .then((response) => {
-                if (response.data.status == "updated") {       
+                if (response.data.status === "updated") {       
                     setEdit(false)
-                    toast.success("Contact updated successfully!!");
-                    getData()
+                    refresh()
+                    notifySuccess("Contact updated successfully!!");
                 }             
             }).catch((err)=>{
-                toast.error('Faild to save contact! Tips:number lenght should be below 12 digits')
+              notifyError('Faild to save contact! Tips:number lenght should be below 12 digits')
             });
     };
 
