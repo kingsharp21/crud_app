@@ -6,8 +6,8 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import EditIcon from "@mui/icons-material/Edit";
 
-import { BaseURL } from "../config/BaseURL";
-import { notifyError, notifySuccess } from "../config/NotificationMsg";
+import { BaseURL } from "../config/baseURL";
+import { notifyError, notifySuccess } from "../config/notificationMsg";
 
 const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData }) => {
   const { loadData } = useContext(RootContext);

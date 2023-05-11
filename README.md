@@ -30,13 +30,7 @@ Run App
 
 Your Backend application is ready! - now run your frontend app
 
-NB: The app APIs run on port 8000 (ie http://127.0.0.1:8000 ). if you already have port 8000 runing a different app, change the port in your "config/BaseURL.js" file
-
-
-
-
-
-
+NB: The app APIs run on port 8000 (ie http://127.0.0.1:8000 ). if you already have port 8000 runing a different app, change the port in your "config/baseURL.js" file
 
 ## RUN FRONTEND APP - React.js App
 

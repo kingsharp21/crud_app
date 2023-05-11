@@ -7,8 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import RootContext from "./config/RootContext";
 
 import { filterServices } from "./services/services";
-import { BaseURL } from "./config/BaseURL";
-import { notifyError } from "./config/NotificationMsg";
+import { BaseURL } from "./config/baseURL";
+import { notifyError } from "./config/notificationMsg";
 
 import AddContact from "./components/AddContact";
 import Contacts from "./components/Contacts";

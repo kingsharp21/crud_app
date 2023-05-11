@@ -2,8 +2,8 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import CloseIcon from "@mui/icons-material/Close";
 
-import { BaseURL } from "../config/BaseURL";
-import { notifyError, notifySuccess } from "../config/NotificationMsg";
+import { BaseURL } from "../config/baseURL";
+import { notifyError, notifySuccess } from "../config/notificationMsg";
 
 import RootContext from "../config/RootContext";
 
