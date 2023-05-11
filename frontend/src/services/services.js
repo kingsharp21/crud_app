@@ -1,4 +1,4 @@
-// search using search bar 
+// filter using search bar 
 export function filterServices() {
     let input, filter, contentList, list, name, i, txtValue;
     input = document.querySelector(".searchInput");

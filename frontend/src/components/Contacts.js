@@ -1,59 +1,62 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
-// import { toast } from "react-toastify";
+import RootContext from "../config/RootContext";
+
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@mui/icons-material/Edit";
 
-import { baseURL } from "../config/baseURL";
-import { notifyError, notifySuccess } from "../config/notificationMsg"
+import { BaseURL } from "../config/BaseURL";
+import { notifyError, notifySuccess } from "../config/NotificationMsg";
 
-const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData, refresh }) => {
+const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData }) => {
+  const { loadData } = useContext(RootContext);
   const [edit, setEdit] = useState(false);
 
-  const needEdit = () => {setEdit(true);};
-
+  const needEdit = () => {
+    setEdit(true);
+  };
 
   const [form, setForm] = useState({
     firstName: firstName,
     lastName: lastName,
-    phoneNumber: phoneNumber ,
+    phoneNumber: phoneNumber,
   });
 
-    const handleChange = (event) => {
-        setForm({
-            ...form,
-            [event.target.id]: event.target.value,
-        });
-    };
+  const handleChange = (event) => {
+    setForm({
+      ...form,
+      [event.target.id]: event.target.value,
+    });
+  };
 
-
-
-    const handleEdit = (event) => {
-        event.preventDefault();
-        axios
-            .patch(`${baseURL}/edit_contact`,{ 
-                id: id,
-                firstName: form.firstName,
-                lastName: form.lastName,
-                phoneNumber: `${form.phoneNumber}`
-                })
-            .then((response) => {
-                if (response.data.status === "updated") {       
-                    setEdit(false)
-                    refresh()
-                    notifySuccess("Contact updated successfully!!");
-                }             
-            }).catch((err)=>{
-              notifyError('Faild to save contact! Tips:number lenght should be below 12 digits')
-            });
-    };
-
+  const handleEdit = (event) => {
+    event.preventDefault();
+    axios
+      .patch(`${BaseURL}/edit_contact`, {
+        id: id,
+        firstName: form.firstName,
+        lastName: form.lastName,
+        phoneNumber: `${form.phoneNumber}`,
+      })
+      .then((response) => {
+        if (response.data.status === "updated") {
+          setEdit(false);
+          loadData();
+          notifySuccess("Contact updated successfully!!");
+        }
+      })
+      .catch((err) => {
+        notifyError(
+          "Faild to save contact! Tips:number lenght should be below 12 digits"
+        );
+      });
+  };
 
   return (
     <>
       {edit === true ? (
-              <form className="list" onSubmit={handleEdit}>
+        <form className="list" onSubmit={handleEdit}>
           <div className="edit">
             <div className="fileds">
               <input
@@ -97,7 +100,7 @@ const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData, refresh })
             <span>
               {" "}
               <LocalPhoneIcon style={{ fill: "grey", fontSize: 18 }} />{" "}
-                {phoneNumber}
+              {phoneNumber}
             </span>
           </div>
           <div className="tools">
@@ -118,11 +121,10 @@ const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData, refresh })
                 fill: "white",
                 background: "#D2042D",
                 borderRadius: 3,
-                padding:4,
+                padding: 4,
                 fontSize: 30,
                 cursor: "pointer",
                 margin: "0 10",
-
               }}
               titleAccess="Delete"
             />

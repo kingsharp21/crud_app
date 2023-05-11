@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import CloseIcon from "@mui/icons-material/Close";
 
-import { baseURL } from "../config/baseURL";
-import { notifyError, notifySuccess } from "../config/notificationMsg";
+import { BaseURL } from "../config/BaseURL";
+import { notifyError, notifySuccess } from "../config/NotificationMsg";
 
-function AddContact({ visibility, updateVisibility, refresh }) {
+import RootContext from "../config/RootContext";
+
+function AddContact({ visibility, updateVisibility }) {
+  const { loadData } = useContext(RootContext);
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -22,14 +25,14 @@ function AddContact({ visibility, updateVisibility, refresh }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post(`${baseURL}/store_contact`, {
+      .post(`${BaseURL}/store_contact`, {
         firstName: form.firstName,
         lastName: form.lastName,
         phoneNumber: form.phoneNumber,
       })
       .then((response) => {
         closeAddDialog(); // close popup
-        refresh(); //refresh data
+        loadData(); //refresh data
         notifySuccess("Contact saved, successfully"); //notify user
 
         //clear form
