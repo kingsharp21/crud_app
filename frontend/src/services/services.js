@@ -10,8 +10,41 @@ export function filterServices() {
         txtValue = name.textContent || name.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
             list[i].style.display = "";
-        } else {
+        }else {
             list[i].style.display = "none";
         }
     }
 }
+
+
+export function validateForms(firstName,lastName,phoneNumber) {
+    if (
+      firstName === "" ||
+      lastName === "" ||
+      phoneNumber === ""
+    ) {
+      let res = {
+        status: false,
+        msg: "All input fields required *",
+      };
+      return res;
+    } else if (firstName.length === 1 || lastName.length === 1) {
+      let res = {
+        status: false,
+        msg: "FirstName and LastName inputs should be more than 1",
+      };
+      return res;
+    } else if (phoneNumber.length !== 10) {
+      let res = {
+        status: false,
+        msg: "Phone Number lenght should be 10,",
+      };
+      return res;
+    } else {
+      let res = {
+        status: true,
+        msg: "Contact saved, successfully",
+      };
+      return res;
+    }
+  }

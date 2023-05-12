@@ -8,6 +8,7 @@ import EditIcon from "@mui/icons-material/Edit";
 
 import { BaseURL } from "../config/baseURL";
 import { notifyError, notifySuccess } from "../config/notificationMsg";
+import { validateForms } from "../services/services";
 
 const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData }) => {
   const { loadData } = useContext(RootContext);
@@ -30,27 +31,45 @@ const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData }) => {
     });
   };
 
+  function formatPhoneNumber(phoneNumberString) {
+    var cleaned = ("" + phoneNumberString).replace(/\D/g, "");
+    var match = cleaned.match(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
+    if (match) {
+      console.log(phoneNumberString);
+      return match[1] + "-" + match[2] + "-" + match[3];
+    }
+    return null;
+  }
+
   const handleEdit = (event) => {
     event.preventDefault();
-    axios
-      .patch(`${BaseURL}/edit_contact`, {
-        id: id,
-        firstName: form.firstName,
-        lastName: form.lastName,
-        phoneNumber: `${form.phoneNumber}`,
-      })
-      .then((response) => {
-        if (response.data.status === "updated") {
-          setEdit(false);
-          loadData();
-          notifySuccess("Contact updated successfully!!");
-        }
-      })
-      .catch((err) => {
-        notifyError(
-          "Faild to save contact! Tips:number lenght should be below 12 digits"
-        );
-      });
+
+    const valid = validateForms(
+      form.firstName,
+      form.lastName,
+      form.phoneNumber
+    );
+    if (!valid.status) {
+      notifyError(valid.msg);
+    } else {
+      axios
+        .patch(`${BaseURL}/edit_contact`, {
+          id: id,
+          firstName: form.firstName,
+          lastName: form.lastName,
+          phoneNumber: `${form.phoneNumber}`,
+        })
+        .then((response) => {
+          if (response.data.status === "updated") {
+            setEdit(false);
+            loadData();
+            notifySuccess("Contact updated successfully!!");
+          }
+        })
+        .catch((err) => {
+          notifyError("Sorry, Something went wrong. Please try again");
+        });
+    }
   };
 
   return (
@@ -84,6 +103,7 @@ const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData }) => {
                 value={form.phoneNumber}
                 onChange={handleChange}
                 placeholder="Phone Number"
+                min="0"
                 required
               />
             </div>
@@ -100,7 +120,7 @@ const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData }) => {
             <span>
               {" "}
               <LocalPhoneIcon style={{ fill: "grey", fontSize: 18 }} />{" "}
-              {phoneNumber}
+              {formatPhoneNumber(phoneNumber)}
             </span>
           </div>
           <div className="tools">

@@ -5,6 +5,17 @@
   box-sizing: border-box;
 }
 
+/* diable input arrows  */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 /* utilities  */
 body{
   background-color: #f9f9f9;
@@ -127,6 +138,9 @@ form.list .edit .fileds input{
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.add-form .required{
+  color: red;
 }
 
 /* loading  */

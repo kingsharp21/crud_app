@@ -20,7 +20,7 @@ class ContactsController extends Controller
     {
         //
         // return Contacts::all();
-        return new ContactCollection(Contacts::all());
+        return new ContactCollection(Contacts::all()->sortByDesc("id"));
     }
 
   
@@ -30,7 +30,7 @@ class ContactsController extends Controller
         $validator = Validator::make($request->all(), [
             'firstName' => 'required|string|max:255',
             'lastName' => 'required|string|max:255',
-            'phoneNumber' => 'required|string|max:12',
+            'phoneNumber' => 'required|string|max:10',
         ]);
         
         if ($validator->fails())
@@ -50,7 +50,7 @@ class ContactsController extends Controller
             'id' => 'required|int|max:100',
             'firstName' => 'required|string|max:255',
             'lastName' => 'required|string|max:255',
-            'phoneNumber' => 'required|string|max:12',
+            'phoneNumber' => 'required|string|max:10',
         ]);
 
         if ($validator->fails())

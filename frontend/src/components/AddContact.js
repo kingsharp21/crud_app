@@ -4,6 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import { BaseURL } from "../config/baseURL";
 import { notifyError, notifySuccess } from "../config/notificationMsg";
+import { validateForms } from "../services/services";
 
 import RootContext from "../config/RootContext";
 
@@ -22,32 +23,68 @@ function AddContact({ visibility, updateVisibility }) {
     });
   };
 
-  const handleSubmit = (event) => {
+  function handleSubmit(event) {
     event.preventDefault();
-    axios
-      .post(`${BaseURL}/store_contact`, {
-        firstName: form.firstName,
-        lastName: form.lastName,
-        phoneNumber: form.phoneNumber,
-      })
-      .then((response) => {
-        closeAddDialog(); // close popup
-        loadData(); //refresh data
-        notifySuccess("Contact saved, successfully"); //notify user
 
-        //clear form
-        setForm({
-          firstName: "",
-          lastName: "",
-          phoneNumber: "",
+    const valid = validateForms(form.firstName,form.lastName,form.phoneNumber);
+    if (!valid.status) {
+      notifyError(valid.msg);
+    } else {
+      axios
+        .post(`${BaseURL}/store_contact`, {
+          firstName: form.firstName,
+          lastName: form.lastName,
+          phoneNumber: form.phoneNumber,
+        })
+        .then((response) => {
+          closeAddDialog(); // close popup
+          loadData(); //refresh data
+          notifySuccess(valid.msg); //notify user
+
+          //clear form
+          setForm({
+            firstName: "",
+            lastName: "",
+            phoneNumber: "",
+          });
+        })
+        .catch((err) => {
+          notifyError("Sorry, Something went wrong. Please try again");
         });
-      })
-      .catch((err) => {
-        notifyError(
-          "Faild to save contact! Tips:number lenght should be below 12 digits"
-        );
-      });
-  };
+    }
+  }
+
+  // function validateForms() {
+  //   if (
+  //     form.firstName === "" ||
+  //     form.lastName === "" ||
+  //     form.phoneNumber === ""
+  //   ) {
+  //     let res = {
+  //       status: false,
+  //       msg: "All input fields required *",
+  //     };
+  //     return res;
+  //   } else if (form.firstName.length === 1 || !form.lastName.length === 1) {
+  //     let res = {
+  //       status: false,
+  //       msg: "FirstName and LastName inputs should be more than 1",
+  //     };
+  //     return res;
+  //   } else if (form.phoneNumber.length !== 10) {
+  //     let res = {
+  //       status: false,
+  //       msg: "Phone Number lenght should be 10,",
+  //     };
+  //     return res;
+  //   } else {
+  //     let res = {
+  //       status: true,
+  //       msg: "Contact saved, successfully",
+  //     };
+  //     return res;
+  //   }
+  // }
 
   function closeAddDialog() {
     updateVisibility("hidden");
@@ -71,17 +108,17 @@ function AddContact({ visibility, updateVisibility }) {
                   className="col-sm-2 col-form-label"
                   htmlFor="basic-default-name"
                 >
-                  First Name
+                  First Name <span className="required">*</span>
                 </label>
                 <div className="col-sm-10">
                   <input
                     type="text"
                     className="form-control"
                     id="firstName"
-                    placeholder="kingsharp"
+                    placeholder="Kingsharp"
                     value={form.firstName}
                     onChange={handleChange}
-                    required
+                    // required
                   />
                 </div>
               </div>
@@ -90,7 +127,7 @@ function AddContact({ visibility, updateVisibility }) {
                   className="col-sm-2 col-form-label"
                   htmlFor="basic-default-company"
                 >
-                  Last Name
+                  Last Name <span className="required">*</span>
                 </label>
                 <div className="col-sm-10">
                   <input
@@ -100,7 +137,7 @@ function AddContact({ visibility, updateVisibility }) {
                     placeholder="Nkansah"
                     value={form.lastName}
                     onChange={handleChange}
-                    required
+                    // required
                   />
                 </div>
               </div>
@@ -110,17 +147,18 @@ function AddContact({ visibility, updateVisibility }) {
                   className="col-sm-2 col-form-label"
                   htmlFor="basic-default-phone"
                 >
-                  Phone No
+                  Phone No <span className="required">*</span>
                 </label>
                 <div className="col-sm-10">
                   <input
                     type="number"
                     id="phoneNumber"
                     className="form-control phone-mask"
-                    placeholder="055 933 6468"
+                    placeholder="0559336468"
                     value={form.phoneNumber}
+                    min="0"
                     onChange={handleChange}
-                    required
+                    // required
                   />
                 </div>
               </div>
