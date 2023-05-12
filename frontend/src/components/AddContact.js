@@ -54,44 +54,13 @@ function AddContact({ visibility, updateVisibility }) {
     }
   }
 
-  // function validateForms() {
-  //   if (
-  //     form.firstName === "" ||
-  //     form.lastName === "" ||
-  //     form.phoneNumber === ""
-  //   ) {
-  //     let res = {
-  //       status: false,
-  //       msg: "All input fields required *",
-  //     };
-  //     return res;
-  //   } else if (form.firstName.length === 1 || !form.lastName.length === 1) {
-  //     let res = {
-  //       status: false,
-  //       msg: "FirstName and LastName inputs should be more than 1",
-  //     };
-  //     return res;
-  //   } else if (form.phoneNumber.length !== 10) {
-  //     let res = {
-  //       status: false,
-  //       msg: "Phone Number lenght should be 10,",
-  //     };
-  //     return res;
-  //   } else {
-  //     let res = {
-  //       status: true,
-  //       msg: "Contact saved, successfully",
-  //     };
-  //     return res;
-  //   }
-  // }
-
+  
   function closeAddDialog() {
     updateVisibility("hidden");
   }
   return (
     <section className={`add-form ${visibility}`}>
-      <div className="col-sm-6 col-md-4 col-5">
+      <div className="col-sm-6 col-md-5 col-lg-4">
         <div className="card mb-4">
           <div className="card-header d-flex align-items-center justify-content-between">
             <h5 className="mb-0">Add Contact</h5>
