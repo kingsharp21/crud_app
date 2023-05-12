@@ -91,7 +91,7 @@ function AddContact({ visibility, updateVisibility }) {
   }
   return (
     <section className={`add-form ${visibility}`}>
-      <div className="col-sm-6 col-md-6 col-5">
+      <div className="col-sm-6 col-md-4 col-5">
         <div className="card mb-4">
           <div className="card-header d-flex align-items-center justify-content-between">
             <h5 className="mb-0">Add Contact</h5>
@@ -105,12 +105,12 @@ function AddContact({ visibility, updateVisibility }) {
             <form onSubmit={handleSubmit}>
               <div className="row mb-3">
                 <label
-                  className="col-sm-2 col-form-label"
+                  className="col-sm-3 col-form-label"
                   htmlFor="basic-default-name"
                 >
                   First Name <span className="required">*</span>
                 </label>
-                <div className="col-sm-10">
+                <div className="col-sm-9">
                   <input
                     type="text"
                     className="form-control"
@@ -124,12 +124,12 @@ function AddContact({ visibility, updateVisibility }) {
               </div>
               <div className="row mb-3">
                 <label
-                  className="col-sm-2 col-form-label"
+                  className="col-sm-3 col-form-label"
                   htmlFor="basic-default-company"
                 >
                   Last Name <span className="required">*</span>
                 </label>
-                <div className="col-sm-10">
+                <div className="col-sm-9">
                   <input
                     type="text"
                     className="form-control"
@@ -144,12 +144,12 @@ function AddContact({ visibility, updateVisibility }) {
 
               <div className="row mb-3">
                 <label
-                  className="col-sm-2 col-form-label"
+                  className="col-sm-3 col-form-label"
                   htmlFor="basic-default-phone"
                 >
                   Phone No <span className="required">*</span>
                 </label>
-                <div className="col-sm-10">
+                <div className="col-sm-9">
                   <input
                     type="number"
                     id="phoneNumber"
