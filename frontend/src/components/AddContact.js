@@ -1,20 +1,24 @@
 import { useState, useContext } from "react";
 import axios from "axios";
+import RootContext from "../config/RootContext";
+
+// imported icons from material UI
 import CloseIcon from "@mui/icons-material/Close";
 
+// imported function and variables from universal config and sevices folders
 import { BaseURL } from "../config/baseURL";
 import { notifyError, notifySuccess } from "../config/notificationMsg";
 import { validateForms } from "../services/services";
 
-import RootContext from "../config/RootContext";
 
 function AddContact({ visibility, updateVisibility }) {
-  const { loadData } = useContext(RootContext);
+  const { loadData } = useContext(RootContext); 
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
     phoneNumber: "",
   });
+
 
   const handleChange = (event) => {
     setForm({
@@ -26,9 +30,14 @@ function AddContact({ visibility, updateVisibility }) {
   function handleSubmit(event) {
     event.preventDefault();
 
-    const valid = validateForms(form.firstName,form.lastName,form.phoneNumber);
+    // calls validateforms function from services.js
+    const valid = validateForms(
+      form.firstName,
+      form.lastName,
+      form.phoneNumber
+    );
     if (!valid.status) {
-      notifyError(valid.msg);
+      notifyError(valid.msg); // notify user with a msg when validation fails
     } else {
       axios
         .post(`${BaseURL}/store_contact`, {
@@ -54,7 +63,6 @@ function AddContact({ visibility, updateVisibility }) {
     }
   }
 
-  
   function closeAddDialog() {
     updateVisibility("hidden");
   }

@@ -2,13 +2,15 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import RootContext from "../config/RootContext";
 
+// imported icons from material UI
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import EditIcon from "@mui/icons-material/Edit";
 
+// imported function and variables from universal config and sevices folders
 import { BaseURL } from "../config/baseURL";
 import { notifyError, notifySuccess } from "../config/notificationMsg";
-import { validateForms } from "../services/services";
+import { validateForms, formatPhoneNumber } from "../services/services";
 
 const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData }) => {
   const { loadData } = useContext(RootContext);
@@ -31,15 +33,6 @@ const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData }) => {
     });
   };
 
-  function formatPhoneNumber(phoneNumberString) {
-    var cleaned = ("" + phoneNumberString).replace(/\D/g, "");
-    var match = cleaned.match(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
-    if (match) {
-      console.log(phoneNumberString);
-      return match[1] + "-" + match[2] + "-" + match[3];
-    }
-    return null;
-  }
 
   const handleEdit = (event) => {
     event.preventDefault();
@@ -50,7 +43,7 @@ const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData }) => {
       form.phoneNumber
     );
     if (!valid.status) {
-      notifyError(valid.msg);
+      notifyError(valid.msg); // notify user with a msg when validation fails
     } else {
       axios
         .patch(`${BaseURL}/edit_contact`, {
@@ -61,13 +54,13 @@ const Contacts = ({ id, firstName, lastName, phoneNumber, deleteData }) => {
         })
         .then((response) => {
           if (response.data.status === "updated") {
-            setEdit(false);
-            loadData();
-            notifySuccess("Contact updated successfully!!");
+            setEdit(false); // close edit div
+            loadData(); // refresh contact
+            notifySuccess("Contact updated successfully!!"); // notify user with a msg
           }
         })
         .catch((err) => {
-          notifyError("Sorry, Something went wrong. Please try again");
+          notifyError("Sorry, Something went wrong. Please try again"); 
         });
     }
   };

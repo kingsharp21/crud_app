@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import AddIcon from "@mui/icons-material/Add";
-import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RootContext from "./config/RootContext";
 
+// imported icons from material UI
+import AutoStoriesIcon from "@mui/icons-material/AutoStories";
+import AddIcon from "@mui/icons-material/Add";
+
+// imported function and variables from universal config and sevices folders
 import { filterServices } from "./services/services";
 import { BaseURL } from "./config/baseURL";
 import { notifyError } from "./config/notificationMsg";
 
+// imported app features/components from components folder
 import AddContact from "./components/AddContact";
 import Contacts from "./components/Contacts";
 
@@ -26,9 +30,12 @@ function App() {
 
   // fetch all data
   function loadData() {
-    axios.get(`${BaseURL}/get_all_contacts`).then((response) => {
+    axios.get(`${BaseURL}/get_all_contacts`)
+    .then((response) => {
       setAllData(response.data["data"]);
       setLoading(false);
+    }).catch((error) => {
+      notifyError("Sorry, Something went wrong. Try refreshing the page to load contacts")
     });
   }
 
@@ -39,9 +46,13 @@ function App() {
         data: { id: contact_id },
       })
       .then((response) => {
-        loadData();
-        notifyError("Contact deleted");
-      });
+        if (response.data.status === "deleted") {
+          loadData(); // refresh contact
+          notifyError("Contact deleted"); //notify user
+        }       
+      }).catch((error) => {
+        notifyError("Sorry, Something went wrong. Please try again")
+    });
   }
 
   useEffect(() => {
@@ -91,16 +102,15 @@ function App() {
                 </div>
               </div>
             ) : (
-              allData.map((data) => {
+              allData.map((data,index) => {
                 return (
                   <Contacts
-                    key={data.id}
+                    key={index}
                     id={data.id}
                     firstName={data.firstName}
                     lastName={data.lastName}
                     phoneNumber={data.phoneNumber}
                     deleteData={deleteData}
-                    // refresh={getData}
                   />
                 );
               })
@@ -111,7 +121,6 @@ function App() {
         <AddContact
           visibility={show}
           updateVisibility={setShow}
-          // refresh={getData}
         />
       </div>
     </RootContext.Provider>
